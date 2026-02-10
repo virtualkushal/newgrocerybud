@@ -1,7 +1,6 @@
 $(document).ready(function () {
 
   // VARIABLES
-  
   let allRegData = JSON.parse(localStorage.getItem("allRegData")) || [];
   let editIndex = null;
 
@@ -18,9 +17,7 @@ $(document).ready(function () {
   // Modal
   let modal = new bootstrap.Modal(document.getElementById("myModal"));
 
-  
   // SHOW DATA FUNCTION
-  
   function getRegData() {
     regList.html("");
 
@@ -45,14 +42,13 @@ $(document).ready(function () {
     localStorage.setItem("allRegData", JSON.stringify(allRegData));
   }
 
-  
   // ADD / UPDATE ITEM
-  
   regForm.submit(function (e) {
     e.preventDefault();
 
     let nameValue = nameInput.val().trim().toUpperCase();
 
+    // Only empty error swal
     if (nameValue === "") {
       swal("Error!", "Item cannot be empty!", "error");
       return;
@@ -62,17 +58,13 @@ $(document).ready(function () {
     if (editIndex !== null) {
       allRegData[editIndex].name = nameValue;
       editIndex = null;
-
       submitBtn.text("Submit");
-      swal("Updated!", "Item updated successfully!", "success");
     }
     // ADD MODE
     else {
       allRegData.push({
         name: nameValue,
       });
-
-      swal("Added!", "New item added successfully!", "success");
     }
 
     // Save Data
@@ -88,9 +80,7 @@ $(document).ready(function () {
     getRegData();
   });
 
-  
-  // DELETE ITEM
-  
+  // DELETE SINGLE ITEM (No swal)
   $(document).on("click", ".delete-btn", function () {
     let index = $(this).data("index");
 
@@ -98,30 +88,43 @@ $(document).ready(function () {
 
     localStorage.setItem("allRegData", JSON.stringify(allRegData));
 
-    swal("Deleted!", "Item removed successfully!", "warning");
-
     getRegData();
   });
 
-  
+  // Delete All Items (Only swal here)
+  $("#clearAllBtn").click(function () {
+
+    if (allRegData.length === 0) return;
+
+    swal({
+      title: "Delete All Items?",
+      text: "This will clear your entire grocery list!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        allRegData = [];
+        localStorage.removeItem("allRegData");
+        getRegData();
+      }
+    });
+
+  });
+
   // EDIT ITEM
-  
   $(document).on("click", ".edit-btn", function () {
     editIndex = $(this).data("index");
 
-    // Put value inside input
     nameInput.val(allRegData[editIndex].name);
 
-    // Change button text
     submitBtn.text("Update");
 
-    // Show Modal
     modal.show();
   });
 
-  
   // INITIAL LOAD
-  
   getRegData();
 
 });

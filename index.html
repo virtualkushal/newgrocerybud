@@ -1,10 +1,16 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Grocery Bud - Your friendly helper for keeping track of your groceries. Manage your shopping list and track your pantry items easily." />
-    <meta name="keywords" content="grocery, shopping list, pantry tracker, inventory management, food storage, meal planning" />
+    <meta
+      name="description"
+      content="Grocery Bud - Your friendly helper for keeping track of your groceries. Manage your shopping list and track your pantry items easily."
+    />
+    <meta
+      name="keywords"
+      content="grocery, shopping list, pantry tracker, inventory management, food storage, meal planning"
+    />
     <title>Grocery Bud</title>
 
     <!-- Google Fonts -->
@@ -42,7 +48,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="./css/style.css" />
 
-     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
 
   <body>
@@ -66,7 +72,6 @@
             <h1 class="text-white fw-bold fs-5 m-0">Track your Grocery</h1>
 
             <div class="mt-2 mt-md-0 d-flex gap-2">
-              
               <button
                 class="btn btn-primary fw-bold"
                 data-bs-toggle="modal"
@@ -74,7 +79,10 @@
               >
                 <i class="fa fa-plus"></i> Add New Item
               </button>
-              
+
+              <button class="btn btn-danger fw-bold" id="clearAllBtn">
+                <i class="fa fa-trash"></i> Delete All
+              </button>
             </div>
           </div>
 
@@ -89,9 +97,7 @@
                     <th>Action</th>
                   </tr>
                 </thead>
-                <tbody class="reg-list">
-                  
-                </tbody>
+                <tbody class="reg-list"></tbody>
               </table>
             </div>
           </div>
