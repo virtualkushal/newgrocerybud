@@ -6,7 +6,8 @@ $(document).ready(function () {
 
   // Form & Input
   let regForm = $(".register-form");
-  let nameInput = regForm.find("input");
+  let nameInput = $("#itemName");
+  let descInput = $("#itemDesc");
 
   // Table Body
   let regList = $(".reg-list");
@@ -25,12 +26,14 @@ $(document).ready(function () {
       regList.append(`
         <tr>
           <td>${index + 1}</td>
-          <td class="item-name">${data.name}</td>
+          <td>
+            <strong>${data.name}</strong><br>
+            <small>${data.desc || ""}</small>
+          </td>
           <td>
             <button class="edit-btn btn btn-sm btn-primary" data-index="${index}">
               Edit
             </button>
-
             <button class="delete-btn btn btn-sm btn-danger" data-index="${index}">
               Delete
             </button>
@@ -47,6 +50,7 @@ $(document).ready(function () {
     e.preventDefault();
 
     let nameValue = nameInput.val().trim().toUpperCase();
+    let descValue = descInput.val().trim();
 
     // Only empty error swal
     if (nameValue === "") {
@@ -57,6 +61,7 @@ $(document).ready(function () {
     // UPDATE MODE
     if (editIndex !== null) {
       allRegData[editIndex].name = nameValue;
+      allRegData[editIndex].desc = descValue;
       editIndex = null;
       submitBtn.text("Submit");
     }
@@ -64,6 +69,7 @@ $(document).ready(function () {
     else {
       allRegData.push({
         name: nameValue,
+        desc: descValue
       });
     }
 
@@ -118,6 +124,7 @@ $(document).ready(function () {
     editIndex = $(this).data("index");
 
     nameInput.val(allRegData[editIndex].name);
+    descInput.val(allRegData[editIndex].desc || "");
 
     submitBtn.text("Update");
 
